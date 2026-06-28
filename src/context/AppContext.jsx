@@ -14,7 +14,7 @@ export function AppProvider({ children }) {
 
   const navigate = useCallback((name) => setPage(name), []);
 
-  // AUTH SYNC
+
   useEffect(() => {
     const getSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
@@ -31,7 +31,7 @@ export function AppProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  // AUTH METHODS
+
   const login = async (email, password) => {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) throw error;
@@ -56,7 +56,7 @@ export function AppProvider({ children }) {
     setPage('checker'); // reset page on logout
   };
 
-  // REAL-TIME SYNC: Use Supabase to fetch history
+
   useEffect(() => {
     if (!user) return; // Only fetch if logged in
 

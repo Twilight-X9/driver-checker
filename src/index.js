@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-// Global patch to prevent Apollo/React DevTools from crashing Tesseract Web Workers
+
 const OriginalBlob = window.Blob;
 window.Blob = function(blobParts, options) {
   if (options && (options.type === 'application/javascript' || options.type === 'text/javascript')) {

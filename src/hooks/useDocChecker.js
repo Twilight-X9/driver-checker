@@ -23,7 +23,7 @@ export function useDocChecker() {
       const flags = [];
       let okCount = 0, warnCount = 0, errCount = 0;
 
-      // 1. OCR & Validation Logic (Processed locally in browser)
+
       for (const file of files) {
         const text = await performOCR(file);
         const textLower = text.toLowerCase();
@@ -74,7 +74,7 @@ export function useDocChecker() {
       errCount = flags.filter(f => f.type === 'err').length;
       const status = errCount > 0 ? 'FAIL' : (warnCount > 0 ? 'REVIEW' : 'PASS');
 
-      // 2. Upload files to Supabase Storage (With Offline Fallback)
+
       let uploadedFiles = [];
       try {
         uploadedFiles = await Promise.all(files.map(async (file) => {
@@ -88,7 +88,7 @@ export function useDocChecker() {
         uploadedFiles = files.map(f => ({ name: f.name, path: `mock_${f.name}` }));
       }
 
-      // 3. Save Report and Driver to Supabase DB (With Offline Fallback)
+
       const reportData = {
         driverName, phone, licenseNum, licenseExpiry, vehicleNum, joinDate,
         flags, okCount, warnCount, errCount, status,
@@ -110,7 +110,7 @@ export function useDocChecker() {
         finalResult = { ...reportData, id: savedReport.id };
       } catch (dbError) {
         console.warn("Supabase unreachable. Using mock DB save.", dbError.message);
-        // We just proceed with the mock finalResult
+
       }
 
       setResult(finalResult);
