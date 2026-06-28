@@ -1,0 +1,71 @@
+.steps {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 8px 0;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text3);
+}
+
+.step.active {
+  color: var(--text);
+}
+
+.step.done {
+  color: var(--text);
+}
+
+.stepNum {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.stepNum svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 3;
+}
+
+.step.active .stepNum {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--surface);
+}
+
+.step.done .stepNum {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--surface);
+}
+
+.sep {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  min-width: 20px;
+  margin: 0 16px;
+}
+
+@media (max-width: 480px) {
+  .stepLabel { display: none; }
+  .sep { min-width: 12px; margin: 0 8px; }
+  .stepNum { width: 28px; height: 28px; font-size: 12px; }
+}

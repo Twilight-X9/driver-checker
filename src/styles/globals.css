@@ -1,0 +1,96 @@
+/* ─── GLOBAL TOKENS (Uber Style) ─── */
+:root {
+  --bg: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface2: #F3F3F3;
+  --surface3: #E2E2E2;
+  --border: #E2E2E2;
+  --border-strong: #000000;
+  
+  --text: #000000;
+  --text2: #545454;
+  --text3: #6B6B6B;
+
+  --accent: #000000;
+  --accent-hover: #333333;
+  --accent-light: #F3F3F3;
+  --accent-text: #000000;
+
+  --green: #05A357;
+  --green-bg: #E6F6ED;
+  --green-text: #048245;
+
+  --amber: #FFC043;
+  --amber-bg: #FFF8EB;
+  --amber-text: #CC9A36;
+
+  --red: #E11900;
+  --red-bg: #FCE8E5;
+  --red-text: #B41400;
+
+  --blue: #276EF1;
+  --blue-bg: #E9F0FE;
+  --blue-text: #1F58C1;
+
+  --shadow-sm: none;
+  --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+
+  --radius: 0px; /* Uber uses mostly sharp or very slightly rounded corners. Let's use 8px for modern feel but keep inputs sharp. We'll set 8px for cards, 0px for buttons/inputs if needed */
+  --radius-sm: 0px;
+  --radius-xs: 0px;
+
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+/* ─── RESET ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, select {
+  font-family: var(--font-body);
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}

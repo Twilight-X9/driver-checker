@@ -1,0 +1,96 @@
+.header {
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logoText {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.logoSub {
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.navBtn {
+  background: none;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 40px; /* Uber uses pill shapes for active states often */
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  transition: background 0.15s;
+}
+
+.navBtn:hover {
+  background: var(--surface2);
+}
+
+.navBtn.active {
+  background: var(--text);
+  color: var(--surface);
+}
+
+.divider {
+  width: 2px;
+  height: 24px;
+  background: var(--border);
+  margin: 0 8px;
+}
+
+.logoutBtn {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text2);
+  transition: color 0.2s;
+  padding: 10px 8px;
+}
+
+.logoutBtn:hover {
+  color: var(--text);
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 0 20px;
+    height: 70px;
+  }
+  .logoText {
+    font-size: 20px;
+  }
+  .navBtn {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+  .divider {
+    margin: 0 4px;
+  }
+}
