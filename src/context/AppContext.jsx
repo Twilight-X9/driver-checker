@@ -9,7 +9,7 @@ export function AppProvider({ children }) {
   
   const [page, setPage] = useState('checker');           // 'checker' | 'history' | 'admin'
 
-  const MOCK_HISTORY = Array.from({ length: 45 }).map((_, i) => {
+  const generatedHistory = Array.from({ length: 45 }).map((_, i) => {
     // Distribute entries unevenly across the last 7 days so the chart bars vary in height
     const dayDistribution = [0,0,0,1,1,1,1,1,1,2,2,3,3,3,3,4,4,5,5,5,6,6,6,6,6,6,6,6]; 
     const daysAgo = dayDistribution[i % dayDistribution.length];
@@ -44,11 +44,31 @@ export function AppProvider({ children }) {
       flags: [],
       files: []
     };
-  }).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+  });
+
+  const nithinRecord = {
+    id: "999",
+    driverName: "Nithin",
+    licenseNum: "TS-09202300123",
+    phone: "9123456780",
+    vehicleNum: "TS-09-EA-9999",
+    aadhaarNum: "9999 8888 7777",
+    rating: 5,
+    status: "PASS",
+    errCount: 0,
+    warnCount: 0,
+    okCount: 3,
+    timestamp: new Date().toISOString(),
+    flags: [{ type: 'ok', label: 'License Verified' }, { type: 'ok', label: 'RC Verified' }, { type: 'ok', label: 'Aadhaar Verified' }],
+    files: [],
+    isLocalSession: true
+  };
+
+  const MOCK_HISTORY = [nithinRecord, ...generatedHistory].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
   const [history, setHistory] = useState(() => {
     try {
-      const stored = localStorage.getItem('app_history_v2');
+      const stored = localStorage.getItem('app_history_v3');
       if (stored) {
         return JSON.parse(stored);
       }
@@ -58,13 +78,13 @@ export function AppProvider({ children }) {
 
   // Sync to localStorage
   useEffect(() => {
-    localStorage.setItem('app_history_v2', JSON.stringify(history));
+    localStorage.setItem('app_history_v3', JSON.stringify(history));
   }, [history]);
 
   // Sync across tabs
   useEffect(() => {
     const handleStorage = (e) => {
-      if (e.key === 'app_history_v2' && e.newValue) {
+      if (e.key === 'app_history_v3' && e.newValue) {
         setHistory(JSON.parse(e.newValue));
       }
     };
