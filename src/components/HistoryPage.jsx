@@ -4,7 +4,11 @@ import { buildReportText, downloadTextFile } from '../utils/reportUtils';
 import styles from './HistoryPage.module.css';
 
 export default function HistoryPage() {
-  const { history, deleteHistoryItem, showToast } = useApp();
+  const { user, history, deleteHistoryItem, showToast } = useApp();
+  
+  const displayHistory = user?.email === 'admin@manivtha.com' 
+    ? history 
+    : history.filter(item => item.isLocalSession);
 
   const handleExport = (item) => {
     const text = buildReportText(item);
@@ -19,7 +23,7 @@ export default function HistoryPage() {
     showToast('Entry deleted.');
   };
 
-  if (history.length === 0) {
+  if (displayHistory.length === 0) {
     return (
       <div className={styles.emptyState}>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -32,7 +36,7 @@ export default function HistoryPage() {
 
   return (
     <ul className={styles.list}>
-      {history.map((item, idx) => {
+      {displayHistory.map((item, idx) => {
         const hasIssues   = item.errCount > 0;
         const hasWarnings = item.warnCount > 0;
         const allClear    = !hasIssues && !hasWarnings;

@@ -96,7 +96,8 @@ export function useDocChecker() {
         flags, okCount, warnCount, errCount, status,
         timestamp: new Date().toISOString(),
         rating: 0,
-        files: uploadedFiles.map(f => f.path)
+        files: uploadedFiles.map(f => f.path),
+        isLocalSession: true
       };
 
       let finalResult = { ...reportData, id: Date.now().toString() };
