@@ -23,6 +23,9 @@ export function AppProvider({ children }) {
     const getSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       setUser(session?.user ?? null);
+      if (session?.user?.email === adminEmail) {
+        setPage('admin');
+      }
       setAuthLoading(false);
     };
     
@@ -30,6 +33,9 @@ export function AppProvider({ children }) {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      if (session?.user?.email === adminEmail) {
+        setPage('admin');
+      }
     });
 
     return () => subscription.unsubscribe();
@@ -92,6 +98,7 @@ export function AppProvider({ children }) {
   }, [user]);
 
   const addToHistory = useCallback(async (entry) => {
+    setHistory(prev => [entry, ...prev]); // Optimistic update
     const { data, error } = await supabase
       .from('reports')
       .select('*')

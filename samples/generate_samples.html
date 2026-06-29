@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Generate Sample Documents for Testing</title>
+  <style>
+    body { font-family: sans-serif; padding: 40px; background: #f0f2f5; text-align: center; }
+    .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 500px; margin: 0 auto; }
+    button { background: #000; color: #fff; border: none; padding: 12px 24px; font-size: 16px; border-radius: 6px; cursor: pointer; margin-top: 20px; transition: 0.2s; }
+    button:hover { background: #333; }
+    p { color: #555; line-height: 1.5; }
+    .info { text-align: left; background: #f9f9f9; padding: 15px; border-radius: 8px; margin-top: 20px; font-family: monospace; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Generate Test Documents</h2>
+    <p>Click the button below to instantly download 3 sample image files (License, RC, and Aadhaar) that will perfectly pass the AI OCR checks on your Vercel website.</p>
+    
+    <button onclick="generateDocs()">Download 3 Sample Images</button>
+    
+    <div class="info">
+      <strong>When testing the app, use these exact details:</strong><br><br>
+      License Number: DL-14202301234<br>
+      Vehicle Number: MH-12-AB-1234
+    </div>
+  </div>
+
+  <script>
+    function createDoc(filename, textLines) {
+      const canvas = document.createElement('canvas');
+      canvas.width = 600;
+      canvas.height = 400;
+      const ctx = canvas.getContext('2d');
+      
+      // Background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Border
+      ctx.strokeStyle = '#cccccc';
+      ctx.lineWidth = 10;
+      ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+
+      // Text
+      ctx.fillStyle = '#000000';
+      ctx.font = '24px Arial';
+      
+      textLines.forEach((line, index) => {
+        ctx.fillText(line, 40, 80 + (index * 40));
+      });
+
+      // Download
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    function generateDocs() {
+      createDoc('license_sample.png', [
+        'STATE TRANSPORT DEPARTMENT',
+        'DRIVING LICENSE',
+        '--------------------------------',
+        'License No: DL-14202301234',
+        'Name: Rajesh Sharma',
+        'Expiry Date: 12/12/2030'
+      ]);
+
+      setTimeout(() => {
+        createDoc('rc_sample.png', [
+          'CERTIFICATE OF REGISTRATION',
+          'Vehicle Registration',
+          '--------------------------------',
+          'Vehicle No: MH-12-AB-1234',
+          'Owner: Rajesh Sharma',
+          'Model: 2021 Swift Dzire'
+        ]);
+      }, 500);
+
+      setTimeout(() => {
+        createDoc('aadhaar_sample.png', [
+          'Government of India',
+          'Unique Identification Authority',
+          '--------------------------------',
+          'Name: Rajesh Sharma',
+          'DOB: 01/01/1985',
+          'Aadhaar: 1234 5678 9012'
+        ]);
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
