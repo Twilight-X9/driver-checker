@@ -36,8 +36,12 @@ function MainApp() {
   return (
     <>
       <Header />
-      {page === 'checker' && <CheckerPage />}
-      {page === 'history' && <HistoryPageLayout />}
+      <div style={{ display: page === 'checker' ? 'block' : 'none' }}>
+        <CheckerPage />
+      </div>
+      <div style={{ display: page === 'history' ? 'block' : 'none' }}>
+        <HistoryPageLayout />
+      </div>
       <Toast />
     </>
   );

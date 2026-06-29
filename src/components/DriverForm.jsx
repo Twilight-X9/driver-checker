@@ -11,6 +11,7 @@ const INITIAL = {
   licenseNum: '',
   licenseExpiry: '',
   vehicleNum: '',
+  aadhaarNum: '',
   joinDate: '',
 };
 
@@ -35,6 +36,7 @@ export default function DriverForm({ onSubmit, loading }) {
     if (!form.phone.trim())         { showToast('Please enter phone or driver ID.');     return false; }
     if (!form.licenseNum.trim())    { showToast('Please enter the license number.');     return false; }
     if (!form.licenseExpiry)        { showToast('Please select the license expiry date.'); return false; }
+    if (!form.aadhaarNum.trim())    { showToast('Please enter the Aadhaar number.');     return false; }
     if (uploadHook.files.length === 0) { showToast('Please upload at least one document.'); return false; }
     return true;
   };
@@ -130,6 +132,21 @@ export default function DriverForm({ onSubmit, loading }) {
               type="text"
               placeholder="e.g. TS 09 EA 1234"
               value={form.vehicleNum}
+              onChange={handleChange}
+              disabled={loading}
+            />
+          </div>
+
+          <div className={styles.field}>
+            <label htmlFor="aadhaarNum">
+              Aadhaar Number <span className={styles.req}>*</span>
+            </label>
+            <input
+              id="aadhaarNum"
+              name="aadhaarNum"
+              type="text"
+              placeholder="e.g. 1234 5678 9012"
+              value={form.aadhaarNum}
               onChange={handleChange}
               disabled={loading}
             />

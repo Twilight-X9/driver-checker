@@ -39,6 +39,7 @@ export default function CheckerPage() {
       licenseNum:    result.licenseNum,
       licenseExpiry: '', // expiry is pre-formatted in result
       vehicleNum:    result.vehicleNum,
+      aadhaarNum:    result.aadhaarNum,
       joinDate:      result.joinDate,
     };
     const fakeFiles = result.files.map((name) => ({ name }));

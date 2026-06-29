@@ -19,7 +19,7 @@ export function useDocChecker() {
   const check = useCallback(async (formData, files) => {
     setLoading(true);
     try {
-      const { driverName, phone, licenseNum, licenseExpiry, vehicleNum, joinDate } = formData;
+      const { driverName, phone, licenseNum, licenseExpiry, vehicleNum, aadhaarNum, joinDate } = formData;
       const flags = [];
       let okCount = 0, warnCount = 0, errCount = 0;
 
@@ -55,8 +55,10 @@ export function useDocChecker() {
             flags.push({ type: 'err', label: 'RC Mismatch', detail: 'Vehicle number not found in RC document.' });
           }
         } else if (fileNameLower.includes('aadhaar') || fileNameLower.includes('id')) {
-          if (textLower.includes('government of india') || textLower.includes('unique identification')) {
-            flags.push({ type: 'ok', label: 'Aadhaar Verified', detail: 'Authentic markers detected.' });
+          if (aadhaarNum && textLower.includes(aadhaarNum.replace(/\s+/g, '').toLowerCase())) {
+            flags.push({ type: 'ok', label: 'Aadhaar Verified', detail: `Matches Aadhaar ${aadhaarNum}` });
+          } else if (textLower.includes('government of india') || textLower.includes('unique identification')) {
+            flags.push({ type: 'ok', label: 'Aadhaar Verified', detail: 'Authentic markers detected (No specific number match).' });
           } else {
             flags.push({ type: 'err', label: 'Invalid ID', detail: 'Document does not appear to be a valid Aadhaar card.' });
           }
@@ -90,7 +92,7 @@ export function useDocChecker() {
 
 
       const reportData = {
-        driverName, phone, licenseNum, licenseExpiry, vehicleNum, joinDate,
+        driverName, phone, licenseNum, licenseExpiry, vehicleNum, aadhaarNum, joinDate,
         flags, okCount, warnCount, errCount, status,
         timestamp: new Date().toISOString(),
         rating: 0,
