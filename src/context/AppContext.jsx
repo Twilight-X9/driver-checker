@@ -7,10 +7,14 @@ export function AppProvider({ children }) {
   const [user, setUser] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
   
-  const [page, setPage] = useState('checker');           // 'checker' | 'history'
+  const [page, setPage] = useState('checker');           // 'checker' | 'history' | 'admin'
   const [history, setHistory] = useState([]);
   const [toast, setToast] = useState(null);
   const [toastTimer, setToastTimer] = useState(null);
+
+  // Consider this email the admin for demonstration purposes
+  const adminEmail = 'admin@manivtha.com';
+  const isAdmin = user?.email === adminEmail;
 
   const navigate = useCallback((name) => setPage(name), []);
 
@@ -54,6 +58,17 @@ export function AppProvider({ children }) {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
     setPage('checker'); // reset page on logout
+  };
+
+  const adminLogin = async (email, password) => {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    if (data.user?.email !== adminEmail) {
+      await supabase.auth.signOut();
+      throw new Error('Not authorized as admin. Please use the regular login.');
+    }
+    setPage('admin');
+    return data;
   };
 
 
@@ -126,7 +141,7 @@ export function AppProvider({ children }) {
 
   return (
     <AppContext.Provider value={{
-      user, authLoading, login, signup, googleSignIn, logout,
+      user, isAdmin, authLoading, login, signup, googleSignIn, logout, adminLogin,
       page, navigate,
       history, addToHistory, updateHistoryItem, deleteHistoryItem,
       toast, showToast,

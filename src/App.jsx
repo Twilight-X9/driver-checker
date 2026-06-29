@@ -5,6 +5,7 @@ import Toast from './components/Toast';
 import CheckerPage from './components/CheckerPage';
 import HistoryPageLayout from './components/HistoryPageLayout';
 import AuthPage from './components/AuthPage';
+import AdminCRMPage from './components/AdminCRMPage';
 import './styles/globals.css';
 
 function MainApp() {
@@ -18,6 +19,15 @@ function MainApp() {
     return (
       <>
         <AuthPage />
+        <Toast />
+      </>
+    );
+  }
+
+  if (page === 'admin') {
+    return (
+      <>
+        <AdminCRMPage />
         <Toast />
       </>
     );
