@@ -34,7 +34,32 @@ export function AppProvider({ children }) {
     };
   }).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-  const [history, setHistory] = useState(MOCK_HISTORY);
+  const [history, setHistory] = useState(() => {
+    try {
+      const stored = localStorage.getItem('app_history');
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    } catch(e) { }
+    return MOCK_HISTORY;
+  });
+
+  // Sync to localStorage
+  useEffect(() => {
+    localStorage.setItem('app_history', JSON.stringify(history));
+  }, [history]);
+
+  // Sync across tabs
+  useEffect(() => {
+    const handleStorage = (e) => {
+      if (e.key === 'app_history' && e.newValue) {
+        setHistory(JSON.parse(e.newValue));
+      }
+    };
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
+
   const [toast, setToast] = useState(null);
   const [toastTimer, setToastTimer] = useState(null);
 
@@ -132,7 +157,9 @@ export function AppProvider({ children }) {
       .select('*')
       .order('timestamp', { ascending: false });
 
-    if (!error) setHistory(data);
+    if (!error && data && data.length > 0) {
+      setHistory(data);
+    }
   }, []);
 
   const updateHistoryItem = useCallback(async (id, patch) => {
