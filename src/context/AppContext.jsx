@@ -16,9 +16,21 @@ export function AppProvider({ children }) {
     const isFail = i % 8 === 0;
     const isWarn = i % 5 === 0 && !isFail;
     
+    const names = [
+      "Rajesh Sharma", "Amit Patel", "Priya Nair", "Vikram Singh", "Ananya Rao",
+      "Mohammed Ali", "Sunita Reddy", "Rahul Verma", "Neha Gupta", "Kiran Desai",
+      "Suresh Kumar", "Anita Das", "Ravi Chandra", "Deepa Mehra", "Karthik Iyer",
+      "Pooja Joshi", "Arjun Prasad", "Kavya Menon", "Sanjay Tiwari", "Meera Krishnan",
+      "Tariq Khan", "Divya Agarwal", "Ajay Prakash", "Sushma Pandey", "Manoj Singh",
+      "Nandini Sen", "Harish Choudhary", "Ritu Jain", "Gaurav Joshi", "Aditi Sharma",
+      "Vikas Khanna", "Shruti Iyer", "Varun Thakur", "Kriti Verma", "Farhan Shaikh",
+      "Sneha Gupta", "Ayush Roy", "Bhumi Reddy", "Rajesh Yadav", "Tara Singh",
+      "Siddharth Rao", "Kiran Agarwal", "Nawaz Shaikh", "Radhika Joshi", "Pankaj Sharma"
+    ];
+
     return {
       id: (1000 + i).toString(),
-      driverName: ["Rajesh Sharma", "Amit Patel", "Priya Nair", "Vikram Singh", "Ananya Rao", "Mohammed Ali", "Sunita Reddy", "Rahul Verma", "Neha Gupta", "Kiran Desai"][i % 10],
+      driverName: names[i],
       licenseNum: "DL-" + (14202300000 + i),
       phone: "98765432" + (10 + i),
       vehicleNum: "MH-12-AB-" + (1000 + i),
@@ -36,7 +48,7 @@ export function AppProvider({ children }) {
 
   const [history, setHistory] = useState(() => {
     try {
-      const stored = localStorage.getItem('app_history');
+      const stored = localStorage.getItem('app_history_v2');
       if (stored) {
         return JSON.parse(stored);
       }
@@ -46,13 +58,13 @@ export function AppProvider({ children }) {
 
   // Sync to localStorage
   useEffect(() => {
-    localStorage.setItem('app_history', JSON.stringify(history));
+    localStorage.setItem('app_history_v2', JSON.stringify(history));
   }, [history]);
 
   // Sync across tabs
   useEffect(() => {
     const handleStorage = (e) => {
-      if (e.key === 'app_history' && e.newValue) {
+      if (e.key === 'app_history_v2' && e.newValue) {
         setHistory(JSON.parse(e.newValue));
       }
     };
